@@ -88,9 +88,9 @@ public class RuleTileGenerator : MonoBehaviour
                     Vector3Int tilePosition = new(x, y, 0);
 
                     // 4方向につながるかを確認して配置
-                    if (IsTileConnects(tilePosition)) {
+                    //if (IsTileConnects(tilePosition)) {
                         tilemap.SetTile(tilePosition, ruleTile);
-                    }
+                    //}
 
                     // スキップ回数をリセット
                     skipCount = 0;

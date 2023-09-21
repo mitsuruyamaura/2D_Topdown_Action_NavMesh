@@ -4488,6 +4488,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1231725682}
   - component: {fileID: 1231725681}
+  - component: {fileID: 1231725683}
   m_Layer: 0
   m_Name: Grid_AutoGenerate
   m_TagString: Untagged
@@ -4523,6 +4524,23 @@ Transform:
   - {fileID: 1319326762}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1231725683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231725680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c163aacaca2c45447abb0778059b0792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 1319326764}
+  ruleTile: {fileID: 11400000, guid: 08002d404144b40bf842342dda8fa3e4, type: 2}
+  tileOffset: {x: 5, y: 5}
+  skipRate: 10
+  maxSkipCount: 1
 --- !u!1 &1319326761
 GameObject:
   m_ObjectHideFlags: 0
@@ -4706,7 +4724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &1870634701
 Grid:
   m_ObjectHideFlags: 0
@@ -4820,7 +4838,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &2099926305
 Grid:
   m_ObjectHideFlags: 0
