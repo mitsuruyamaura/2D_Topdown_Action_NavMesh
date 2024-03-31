@@ -922,7 +922,7 @@ Tilemap:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1156730574}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Tiles:
   - first: {x: 8, y: -8, z: 0}
     second:
