@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -16,24 +18,25 @@ public class RuleTileGenerator : MonoBehaviour
     [SerializeField] private int maxSkipCount = 3;  // 最大連続スキップ回数
 
     
-    
     void Start() {
         // タイルの自動生成
-        GenerateTiles();
+        AutoGenerateRuleTiles();
     }
 
     /// <summary>
     /// タイルの自動生成
     /// </summary>
-    private void GenerateTiles() {
+    private void AutoGenerateRuleTiles() {
         int skipCount = 0;
         
         // タイルを中央位置に配置するようにするため、原点スタートではなく、左下から初期配置するように設定
-        BoundsInt bounds = new BoundsInt(-tileOffset.x, -tileOffset.y, 0, tileOffset.x, tileOffset.y, 0);
+        // 代入しなくても問題なし
+        //BoundsInt bounds = new BoundsInt(-tileOffset.x, -tileOffset.y, 0, tileOffset.x, tileOffset.y, 0);
 
         // X 軸と Y 軸のループ処理を行ってタイルを生成して配置する
-        for (int x = bounds.min.x; x < bounds.max.x; x++){
-            for (int y = bounds.min.y; y < bounds.max.y; y++) {
+        // タイルを中央位置に配置するようにするため、原点スタートではなく、左下から初期配置するように設定
+        for (int x = -tileOffset.x; x < tileOffset.x; x++){
+            for (int y = -tileOffset.y; y < tileOffset.y; y++) {
 
                 // スキップ回数が上限に達していないかつスキップの確率に合致する場合、スキップ
                 // たまにスキップさせる。そうすることでタイルが繋がらなくなり、ランダムな形状になる
@@ -84,28 +87,36 @@ public class RuleTileGenerator : MonoBehaviour
                 }
                 else
                 {
-                    // スキップせずにタイルを配置
-                    Vector3Int tilePosition = new(x, y, 0);
-
+                    SetRuleTile(x, y);
+                    
+                    //Vector3Int tilePosition = new(x, y, 0);
                     // 4方向につながるかを確認して配置
                     //if (IsTileConnects(tilePosition)) {
-                        tilemap.SetTile(tilePosition, ruleTile);
+                        //tilemap.SetTile(tilePosition, ruleTile);
+                    //    SetRuleTile(x, y);
                     //}
-
-                    // スキップ回数をリセット
-                    skipCount = 0;
                 }
 
                 // 最大連続スキップ回数を超えたらタイルを配置
                 if (skipCount > maxSkipCount) {
-                    Vector3Int tilePosition = new(x, y, 0);
-                    tilemap.SetTile(tilePosition, ruleTile);
-                    skipCount = 0;
+                    SetRuleTile(x, y);
                 }
             }
         }
+
+        // タイルセット
+        void SetRuleTile(int x, int y) {                
+            // タイルの配置位置の設定
+            Vector3Int tilePosition = new(x, y, 0);
+
+            // RuleTile を利用して配置
+            tilemap.SetTile(tilePosition, ruleTile);
+            
+            // スキップ回数をリセット
+            skipCount = 0;
+        }
     }
-    
+
     /// <summary>
     /// タイルが4方向につながるかを確認
     /// </summary>
@@ -119,7 +130,7 @@ public class RuleTileGenerator : MonoBehaviour
 
         foreach (Vector3Int direction in directions) {
             Vector3Int neighborPosition = tilePosition + direction;
-            if (!tilemap.HasTile(neighborPosition)) {
+            if (tilemap.HasTile(neighborPosition)) {
                 return true;  // 4方向のうち少なくとも1方向につながる
             }
         }
